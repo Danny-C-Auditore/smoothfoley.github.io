@@ -1,138 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Yaoyun Zhang, Xuenan Xu, Mengxue Wu">
-    <meta name="description" content="Smooth-Foley: Creating Continuous Sound for Video-to-Audio Generation Under Semantic Guidance">
+<!-- saved from url=(0034)https://zeyuxie29.github.io/AudioTime/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Smooth-Foley</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <!-- <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-            color: #333;
-        }
+    <link href="./assets/css/style.css" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      td {
+        vertical-align: middle;
+      }
+      audio {
+        width: 20vw;
+        min-width: 100px;
+        max-width: 250px;
+      }
+      #scrollToTopBtn {
+        display: none; 
+        position: fixed; 
+        bottom: 100px; 
+        right: 100px; 
+        background-color: #027f41; 
+        color: #fff; 
+        border: none;
+        font-size: 16px; 
+        border-radius: 20%; 
+        padding: 20px;
+        cursor: pointer; 
+        z-index: 1;
+      }
+      #scrollToTopBtn:hover {
+        background-color: #2cb46e;
+      }
+      .custom-color {
+          color: #027f41;
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
+      .sample_4 {
+            flex: 0 0 24%; 
+            border: 0px solid #ddd;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+            padding: 5px;
+            margin: 5px;
+            text-align: center;    
+            
+      }
+      .sample_4 img {
+          max-width: 100%;
+          width:auto;       
+          border-radius: 8px;
+          transition: transform 0.3s ease;
 
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-        }
-
-        h3 {
-            font-size: 1.2em;
-            margin-top: 30px;
-        }
-
-        p {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        ul li {
-            margin: 5px 0;
-            padding-left: 20px;
-            text-indent: -15px;
-        }
-
-        ul li::before {
-            content: "• ";
-            color: #2c3e50;
-        }
-
-        img {
-            display: block;
-            max-width: 100%;
-            height: auto;
-            margin: 20px auto;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 14px;
-            color: #888;
-        }
-    </style> -->
-</head>
-<body>
-    <div class="container">
-        <h1>Smooth-Foley</h1>
-        <h2>Creating Continuous Sound for Video-to-Audio Generation Under Semantic Guidance</h2>
-        <p><b>Authors:</b> Yaoyun Zhang, Xuenan Xu, Mengxue Wu</p>
-        <p><b>Affiliations:</b> MoE Key Lab of Artificial Intelligence, AI Institute, X-LANCE Lab, Department of Computer Science and Engineering, Shanghai Jiao Tong University</p>
+          
+      }
+      .sample_4 img:hover {
+          transform: scale(1.6); 
+          z-index: 2;
+      }
+      footer {
+          background-color: #098d49;
+          color: #fff;
+          text-align: center;
+          padding: 5px 0;
+      }
         
-        <section class="table-of-contents">
-            <h3>Table of Contents</h3>
-            <ul>
-                <li><a href="#abstract">Abstract</a></li>
-                <li><a href="#method">Smooth-Foley Method</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-            </ul>
-        </section>
+    </style>
+  </head>
+  <body>
+    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Back to top navigation bar">↑ Top ↑</button>
+    <script>
+      
+        window.onscroll = function() {scrollFunction()};
 
-        <section id="abstract">
-            <h3>Abstract</h3>
-            <p>
-                The video-to-audio (V2A) generation task has drawn attention in the field of multimedia due to its practicality in producing Foley sound. Semantic and temporal conditions are fed to the generation model to indicate sound events and temporal occurrence.
-                Recent studies on synthesizing immersive and synchronized audio are faced with challenges on videos with moving visual presence.
-                The temporal condition is not accurate enough, while low-resolution semantic condition exacerbates the problem.
-                To tackle these challenges, we propose Smooth-Foley, a V2A generative model taking semantic guidance from the textual label across the generation to enhance both semantic and temporal alignment in audio.
-                Two adapters are trained to leverage pre-trained text-to-audio generation models.
-                A frame adapter integrates high-resolution frame-wise video features while a temporal adapter integrates temporal conditions obtained from similarities of visual frames and textual labels.
-                The incorporation of semantic guidance from textual labels achieves precise audio-video alignment.
-                We conduct extensive quantitative and qualitative experiments.
-                Results show that Smooth-Foley performs better than existing models on both continuous sound scenarios and general scenarios.
-                With semantic guidance, the audio generated by Smooth-Foley exhibits higher quality and better adherence to physical laws.
-            </p>
-        </section>
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("scrollToTopBtn").style.display = "block";
+            } else {
+                document.getElementById("scrollToTopBtn").style.display = "none";
+            }
+        }
+      
+        function scrollToTop() {
+            document.body.scrollTop = 0; 
+            document.documentElement.scrollTop = 0; 
+        }
+    </script>
+    <div class="container pt-5 mt-5 shadow p-4 mb-5 bg-white rounded">
+      <div class="text-center">
+        <h1><span class="custom-color">Smooth-Foley</span></h1><h3> Creating Continuous Sound for Video-to-Audio Generation Under Semantic</h3>
+        <p class="lead fw-bold">
+          |<a href="https://arxiv.org/abs/2407.02857" class="btn border-white bg-white fw-bold">Paper</a>|<a href="https://github.com/zeyuxie29/AudioTime" class="btn border-white bg-white fw-bold">Code</a>|
+        </p>
+        <p class="fst-italic mb-0">
+          <span class="author-block">
+            <a href="https://scholar.google.de/citations?user=LzSAnHMAAAAJ&hl=en&oi=ao">Yaoyun Zhang</a><sup>1</sup>,</span>
+          
+          <span class="author-block">
+            <a href="https://scholar.google.de/citations?user=e0h0ae8AAAAJ&hl=en&oi=ao">Xuenan Xu</a><sup>1</sup>,
+          </span>
+          <span class="author-block">
+            <a href="https://scholar.google.de/citations?user=9cvRM5wAAAAJ&hl=en&oi=ao">Mengyue Wu</a><sup>1</sup>,
+          </span>
+          
+        </span></p>
+        <p><b></b></p>
+      </div>
+      <div style="text-align: center">
+        <span class="author-block"><sup>1</sup>MoE Key Lab of Artificial Intelligence, AI Institute</span>
+      </div>
+      <div style="text-align: center">
+        <span class="author-block"><sup>2</sup> X-LANCE Lab, Department of Computer Science and Engineering</span>
+        <span class="author-block"><sup>3</sup>Shanghai Jiao Tong University</span>
+      </div>
+      <p>
+        <b><p class="custom-color">Abstract.</p></b>  
+        The video-to-audio (V2A) generation task has drawn attention in the field of multimedia due to the practicality in producing Foley sound.
+        Semantic and temporal conditions are fed to the generation model to indicate sound events and temporal occurrence.
+        Recent studies on synthesizing immersive and synchronized audio are faced with challenges on videos with moving visual presence.
+        The temporal condition is not accurate enough while low-resolution semantic condition exacerbates the problem.
+        To tackle these challenges, we propose Smooth-Foley, a V2A generative model taking semantic guidance from the textual label across the generation to enhance both semantic and temporal alignment in audio.
+        Two adapters are trained to leverage pre-trained text-to-audio generation models.
+        A frame adapter integrates high-resolution frame-wise video features while a temporal adapter integrates temporal conditions obtained from similarities of visual frames and textual labels.
+        The incorporation of semantic guidance from textual labels achieves precise audio-video alignment.
+        We conduct extensive quantitative and qualitative experiments.
+        Results show that Smooth-Foley performs better than existing models on both continuous sound scenarios and general scenarios.
+        With semantic guidance, the audio generated by Smooth-Foley exhibits higher quality and better adherence to physical laws.
 
-
-        <section id="method">
-            <h3>Smooth-Foley Method</h3>
-            <img src="./pipeline.png" alt="Smooth-Foley Pipeline">
-            <p>
-            </p>
-
-        </section id="gallery">
-            <h3>Gallary</h3>
-        <section>
+      </p>
+      
+      <b class="custom-color">Demo Navigation.</b>
+      <div style="text-align: center;">
+        <!-- <a href="#category1" class="btn border-white bg-white fw-bold">(a)Method</a> -->
+        <a href="#category2" class="btn border-white bg-white fw-bold">(a)Gallery</a>
+        <!-- <a href="#category3" class="btn border-white bg-white fw-bold">(c) Frequency</a>
+        <a href="#category4" class="btn border-white bg-white fw-bold">(d) Timestamp</a>
+        <a href="#category5" class="btn border-white bg-white fw-bold">(evaluation) STEAM </a> -->
+      </div>
+    </div>
+    
+    <div class="container pt-5 mt-5 shadow p-4 mb-5 bg-white rounded">
+        <h2 id="pipeline-overview" style="text-align: center;" class="custom-color">Method</h2>
+        <br>
+        <p style="text-align: center;">
+            <img src="./pipeline.png" height="500" width="800" class="img-fluid">
+        </p>
+        <div style="text-align: center">The overall pipeline of Smooth-Foley</div>
     </div>
 
-    
 
+    <div class="container pb-0 shadow p-5 mb-5 bg-white rounded">
+      <h3 id="category1" class="custom-color">(a) Gallery</h3>
+      <p class="mb-0">
+        The generated samples on VGG-Continuous.
+      </p>
+      <div class="container pt-3 table-responsive">
+        <table class="table table-hover" id="supervision-efficiency-table">
+          <thead>
+            <tr>
+              <!-- <th style="text-align: center">&emsp;&emsp;&emsp;&emsp;Label&emsp;&emsp;&emsp;&emsp;</th> -->
+              <th style="text-align: center">&emsp;&emsp;&emsp;Ground Truth &emsp;&emsp;</th>
+              <th style="text-align: center">&emsp;&emsp;&emsp;Ours&emsp;&emsp;&emsp;</th>
+              <th style="text-align: center">&emsp;&emsp;&emsp;FoleyCrafter&emsp;&emsp;&emsp;</th>
+              <th style="text-align: center">&emsp;&emsp;&emsp;Diff-Foley&emsp;&emsp;&emsp;</th>
+              <!-- <th style="text-align: center">Audio</th>      -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr> 
+              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/A-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/C-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+               
+               
+            <tr> <td><font size="-1">A mosquito buzzes twice, <u>followed by</u> the sound of a drill.</font></td> 
+              <td><a class="sample_4"><img src="./DemoFile/data/fig/ordering_syn_2.png" alt="Your Image"></a></td> 
+               
+          
+            <tr> <td><font size="-1">An air horn blasts three times, <u>followed by</u> two knocks.</font></td> 
+              <td><a class="sample_4"><img src="./DemoFile/data/fig/ordering_syn_3.png" alt="Your Image"></a></td> 
+              <td style="text-align: center"><font size="-1">"Air horn, truck horn": [[0.925,1.468],[2.053,2.596],[2.963,3.506]],"Knock": [[5.795,5.998], [6.773,6.976]]</font></td> 
+              <td style="text-align: center"><audio controls="" controlslist="nodownload" class="px-1"> <source src="./DemoFile/data/audio/ordering_syn_3.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
+            
+            <tr><td style="border-bottom: none;"><br></td>
+              <td style="border-bottom: none;"><br></td>
+              <td style="border-bottom: none;"><br></td>
+              <td style="border-bottom: none;"><br></td>
+            </tr>
+                             
+         </tbody>
+        </table>
+      </div>
+    </div>
 
+      
     <footer>
-        &copy; 2024 Smooth-Foley. All rights reserved.
+      &copy; 2024 Smooth-Foley
     </footer>
-</body>
-</html>
+
+  
+</body></html>
