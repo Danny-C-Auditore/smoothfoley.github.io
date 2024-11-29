@@ -7,13 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       td {
+        flex: 1;
+        padding: 5px;
         vertical-align: middle;
       }
-      audio {
-        width: 20vw;
-        min-width: 100px;
-        max-width: 250px;
+      table {
+    width: 100%; /* Ensure table stretches across the container */
+  }
+
+      .video {
+        display: block;
+        width: 400px; /* or any custom width like 640px */
+        height: 100%; /* maintain aspect ratio */
+        /* object-fit: cover */
+      } 
+      .video-row {
+        display: flex;
+        justify-content: space-between; /* Space out the videos evenly */
+        padding: 10px; /* Optional: for padding between the videos */
       }
+
+      .video_3 {
+        display: block;
+        width: 400px; /* or any custom width like 640px */
+        height: 120%; /* maintain aspect ratio */
+        /* object-fit: cover */
+      } 
+
       #scrollToTopBtn {
         display: none; 
         position: fixed; 
@@ -34,7 +54,11 @@
       .custom-color {
           color: #027f41;
       }
-
+      audio {
+        width: 20vw;
+        min-width: 100px;
+        max-width: 250px;
+      }
       .sample_4 {
             flex: 0 0 24%; 
             border: 0px solid #ddd;
@@ -46,7 +70,7 @@
       }
       .sample_4 img {
           max-width: 100%;
-          width:auto;       
+          width:400px;       
           border-radius: 8px;
           transition: transform 0.3s ease;
 
@@ -88,11 +112,11 @@
       <div class="text-center">
         <h1><span class="custom-color">Smooth-Foley</span></h1><h3> Creating Continuous Sound for Video-to-Audio Generation Under Semantic</h3>
         <p class="lead fw-bold">
-          |<a href="https://arxiv.org/abs/2407.02857" class="btn border-white bg-white fw-bold">Paper</a>|<a href="https://github.com/zeyuxie29/AudioTime" class="btn border-white bg-white fw-bold">Code</a>|
+          |<a href="" class="btn border-white bg-white fw-bold">Paper</a>|<a href="" class="btn border-white bg-white fw-bold">Code</a>|
         </p>
         <p class="fst-italic mb-0">
           <span class="author-block">
-            <a href="https://scholar.google.de/citations?user=LzSAnHMAAAAJ&hl=en&oi=ao">Yaoyun Zhang</a><sup>1</sup>,</span>
+            <a href="">Yaoyun Zhang</a><sup>1</sup>,</span>
           
           <span class="author-block">
             <a href="https://scholar.google.de/citations?user=e0h0ae8AAAAJ&hl=en&oi=ao">Xuenan Xu</a><sup>1</sup>,
@@ -165,27 +189,224 @@
             </tr>
           </thead>
           <tbody>
-            <tr> 
-              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/A-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td style="text-align: center"><video controls="" controlslist="nodownload" class="px-1"> <source src="./assets/Data/sample-1/C-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-               
-               
-            <tr> <td><font size="-1">A mosquito buzzes twice, <u>followed by</u> the sound of a drill.</font></td> 
-              <td><a class="sample_4"><img src="./DemoFile/data/fig/ordering_syn_2.png" alt="Your Image"></a></td> 
-               
-          
-            <tr> <td><font size="-1">An air horn blasts three times, <u>followed by</u> two knocks.</font></td> 
-              <td><a class="sample_4"><img src="./DemoFile/data/fig/ordering_syn_3.png" alt="Your Image"></a></td> 
-              <td style="text-align: center"><font size="-1">"Air horn, truck horn": [[0.925,1.468],[2.053,2.596],[2.963,3.506]],"Knock": [[5.795,5.998], [6.773,6.976]]</font></td> 
-              <td style="text-align: center"><audio controls="" controlslist="nodownload" class="px-1"> <source src="./DemoFile/data/audio/ordering_syn_3.wav" type="audio/wav">Your browser does not support the audio element.</audio></td>
-            
-            <tr><td style="border-bottom: none;"><br></td>
-              <td style="border-bottom: none;"><br></td>
-              <td style="border-bottom: none;"><br></td>
-              <td style="border-bottom: none;"><br></td>
+            <table>
+              <tr class="video-row"> 
+              <!-- Sample1 -->
+              <td ><video class="video" controls> <source src="./assets/Data/sample-1/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td style="text-align: center"><video class="video" controls> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td ><video class="video" controls> <source src="./assets/Data/sample-1/A-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              <td ><video class="video" controls> <source src="./assets/Data/sample-1/C-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
             </tr>
+            </table>
+            
+            <table>
+            <tr class="video-row"> <!-- Set Spec below  -->
+              <td ><a class="sample_4"><img src="./assets/Data/sample-1/GT-airplane flyby.png" alt="Your Image"></a></td> 
+              <td ><a class="sample_4"><img src="./assets/Data/sample-1/B-airplane.png" alt="Your Image"></a></td> 
+              <td ><a class="sample_4"><img src="./assets/Data/sample-1/A-airplane.png" alt="Your Image"></a></td> 
+              <td > <a class="sample_4"><img src="./assets/Data/sample-1/C-airplane.png" alt="Your Image"></a></td> 
+            <tr> 
+            </table>
+
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/GT-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/B-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/A-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/C-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-6/GT-civil defense siren.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-6/B-civil defense siren.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-6/A-civil defense siren.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-6/C-civil defense siren.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/GT-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/B-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/A-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/C-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-7/GT-train horning.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-7/B-train horning.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-7/A-train horning.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-7/C-train horning.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+            <hr>   <!-- Sample2 -->
+            <table>
+              <tr class="video-row">
+                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/GT-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/B-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/A-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/C-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+              </tr>
+            </table>
+            <table>
+              <tr  class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-2/GT-helicopter.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-2/B-helicopter.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-2/A-helicopter.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-2/C-helicopter.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+            
+
+            <hr>
+            <!-- sample10 -->
+            <table>
+              <tr class="video-row"> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/GT-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/B-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/A-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/C-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-10/GT-ambulance siren.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-10/B-ambulance siren.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-10/A-ambulance siren.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-10/C-ambulance siren.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+            
+
+                
+            
+
+            
+            <hr>
+            <!-- sample3 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/B-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/A-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/C-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-3/GT-airplane flyby.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-3/B-airplane flyby.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-3/A-airplane flyby.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-3/C-airplane flyby.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/GT-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/B-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/A-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/C-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-9/GT-police car (siren).png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-9/B-police car (siren).png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-9/A-police car (siren).png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-9/C-police car (siren).png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+            
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/GT-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/B-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/A-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/C-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-4/GT-train whistling.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-4/B-train whistling.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-4/A-train whistling.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-4/C-train whistling.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/GT-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/B-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/A-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/C-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-5/GT-train whistling.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-5/B-train whistling.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-5/A-train whistling.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-5/C-train whistling.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+
+
+            <hr>
+            <!-- sample4 -->
+            <table>
+              <tr class="video-row"> 
+                  <!-- Sample3 -->
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/GT-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/B-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/A-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/C-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
+                </tr>
+            </table>
+            
+            <table>
+              <tr class="video-row"> <!-- Set Spec below  -->
+                <td ><a class="sample_4"><img src="./assets/Data/sample-8/GT-subway, metro, underground.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-8/B-subway, metro, underground.png" alt="Your Image"></a></td> 
+                <td ><a class="sample_4"><img src="./assets/Data/sample-8/A-subway, metro, underground.png" alt="Your Image"></a></td> 
+                <td > <a class="sample_4"><img src="./assets/Data/sample-8/C-subway, metro, underground.png" alt="Your Image"></a></td>
+              </tr>
+            </table>
+
+
+
+
+
+
                              
          </tbody>
         </table>
