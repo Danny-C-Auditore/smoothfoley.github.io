@@ -1,426 +1,450 @@
-<!DOCTYPE html>
-<!-- saved from url=(0034)https://zeyuxie29.github.io/AudioTime/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Smooth-Foley</title>
-    <link href="./assets/css/style.css" rel="stylesheet">
-    
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      td {
-        flex: 1;
-        padding: 5px;
-        vertical-align: middle;
-      }
-      table {
-    width: 100%; /* Ensure table stretches across the container */
-  }
-
-      .video {
-        display: block;
-        width: 400px; /* or any custom width like 640px */
-        height: 100%; /* maintain aspect ratio */
-        margin: 0 auto
-        /* object-fit: cover
-         */
-        
-      } 
-      .video-row {
-        display: flex;
-        justify-content: space-between; /* Space out the videos evenly */
-        padding: 10px; /* Optional: for padding between the videos */
-      }
-
-      .video_3 {
-        display: block;
-        width: 400px; /* or any custom width like 640px */
-        height: 120%; 
-        /* object-fit: cover */
-        margin: 0 auto
-      } 
-
-      #scrollToTopBtn {
-        display: none; 
-        position: fixed; 
-        bottom: 100px; 
-        right: 100px; 
-        background-color: #027f41; 
-        color: #fff; 
-        border: none;
-        font-size: 16px; 
-        border-radius: 20%; 
-        padding: 20px;
-        cursor: pointer; 
-        z-index: 1;
-      }
-      #scrollToTopBtn:hover {
-        background-color: #2cb46e;
-      }
-      .custom-color {
-          color: #027f41;
-      }
-      audio {
-        width: 20vw;
-        min-width: 100px;
-        max-width: 250px;
-      }
-      .sample_4 {
-            flex: 0 0 24%; 
-            border: 0px solid #ddd;
-            border-radius: 8px;
-            padding: 5px;
-            margin: 5px;
-            text-align: center;    
-            
-      }
-      .sample_4 img {
-          max-width: 100%;
-          width:400px;       
-          border-radius: 8px;
-          transition: transform 0.3s ease;
-
-          
-      }
-      .sample_4 img:hover {
-          transform: scale(1.6); 
-          z-index: 2;
-      }
-      footer {
-          background-color: #098d49;
-          color: #fff;
-          text-align: center;
-          padding: 5px 0;
-      }
-        
-    </style>
+    <meta
+      name="description"
+      content="Smooth-Foley creates continuous, semantically and temporally aligned sound for video-to-audio generation."
+    >
+    <title>Smooth-Foley</title>
+    <link rel="stylesheet" href="./assets/css/style.css?v=5">
   </head>
-  <body>
-    <button onclick="scrollToTop()" id="scrollToTopBtn" title="Back to top navigation bar">↑ Top ↑</button>
+  <body id="top">
+    <main class="page-shell">
+      <section class="paper-card" id="overview" aria-labelledby="paper-title">
+        <header class="hero">
+          <h1 id="paper-title">Smooth-Foley</h1>
+          <p class="subtitle">
+            Creating Continuous Sound for Video-to-Audio Generation Under Semantic Guidance
+          </p>
+
+          <ul class="resource-list" aria-label="Project resources">
+            <li>
+              <a
+                class="resource-link"
+                href="https://ieeexplore.ieee.org/abstract/document/10890403/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Paper</a>
+            </li>
+            <li><span class="resource-link resource-pending">Code · Coming soon</span></li>
+          </ul>
+
+          <p class="authors" aria-label="Authors">
+            <span><a href="https://scholar.google.com/citations?hl=en&amp;user=jrQLGZoAAAAJ">Yaoyun Zhang</a><sup>1,2</sup>,</span>
+            <span><a href="https://scholar.google.de/citations?user=e0h0ae8AAAAJ&amp;hl=en&amp;oi=ao">Xuenan Xu</a><sup>3</sup>,</span>
+            <span><a href="https://scholar.google.de/citations?user=9cvRM5wAAAAJ&amp;hl=en&amp;oi=ao">Mengyue Wu</a><sup>1,2</sup></span>
+          </p>
+
+          <p class="affiliations">
+            <span><sup>1</sup>X-LANCE Lab, Department of Computer Science and Engineering</span>
+            <span><sup>2</sup>Shanghai Jiao Tong University</span>
+            <span><sup>3</sup>Shanghai Artificial Intelligence Lab</span>
+          </p>
+
+          <p class="contact-email">
+            <a href="mailto:yaoyunzhang897@gmail.com">yaoyunzhang897@gmail.com</a>
+          </p>
+        </header>
+
+        <div class="abstract">
+          <h2 class="section-label">Abstract.</h2>
+          <p>
+            The video-to-audio (V2A) generation task has drawn attention in the field of multimedia due to the practicality in producing Foley sound.
+            Semantic and temporal conditions are fed to the generation model to indicate sound events and temporal occurrence.
+            Recent studies on synthesizing immersive and synchronized audio are faced with challenges on videos with moving visual presence.
+            The temporal condition is not accurate enough while low-resolution semantic condition exacerbates the problem.
+            To tackle these challenges, we propose Smooth-Foley, a V2A generative model taking semantic guidance from the textual label across the generation to enhance both semantic and temporal alignment in audio.
+            Two adapters are trained to leverage pre-trained text-to-audio generation models.
+            A frame adapter integrates high-resolution frame-wise video features while a temporal adapter integrates temporal conditions obtained from similarities of visual frames and textual labels.
+            The incorporation of semantic guidance from textual labels achieves precise audio-video alignment.
+            We conduct extensive quantitative and qualitative experiments.
+            Results show that Smooth-Foley performs better than existing models on both continuous sound scenarios and general scenarios.
+            With semantic guidance, the audio generated by Smooth-Foley exhibits higher quality and better adherence to physical laws.
+          </p>
+        </div>
+
+        <nav class="page-nav" aria-label="Page sections">
+          <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#method">Method</a></li>
+            <li><a href="#dataset">Dataset Construction</a></li>
+            <li><a href="#category2">Demo Gallery</a></li>
+          </ul>
+        </nav>
+      </section>
+
+      <span class="anchor-alias" id="pipeline-overview" aria-hidden="true"></span>
+      <section class="section-card" id="method" aria-labelledby="method-title">
+        <h2 class="section-heading" id="method-title">Method</h2>
+        <p class="section-intro">
+          Smooth-Foley combines frame-wise semantic guidance with a temporal adapter for continuous and synchronized sound generation.
+        </p>
+        <figure class="method-figure">
+          <img
+            src="./pipeline.png"
+            alt="Smooth-Foley pipeline showing video labels and frames feeding frame and temporal adapters before audio generation"
+            width="800"
+            height="500"
+          >
+          <figcaption>The overall pipeline of Smooth-Foley.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section-card" id="dataset" aria-labelledby="dataset-title">
+        <h2 class="section-heading" id="dataset-title">Dataset Construction</h2>
+        <p class="section-intro">
+          VGGSound-Continuous is constructed through label-level semantic screening and two clip-level text-grounding passes. Invalid clips are removed before the final continuous/non-continuous split.
+        </p>
+
+        <p class="dataset-scroll-hint">Swipe or scroll horizontally to inspect the full pipeline.</p>
+        <figure class="dataset-figure">
+          <div
+            class="dataset-figure-scroll"
+            tabindex="0"
+            aria-label="VGGSound-Continuous filtering pipeline; scroll horizontally on narrow screens"
+          >
+            <a
+              class="dataset-figure-link"
+              href="./assets/figures/vggsound-continuous-filtering.png"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the VGGSound-Continuous filtering pipeline at full size"
+            >
+              <img
+                src="./assets/figures/vggsound-continuous-filtering.png"
+                alt="VGGSound-Continuous filtering pipeline: GPT-4 screens labels, the first text-grounding pass removes invalid clips, the second pass accumulates regions with similarity at least 0.5, and clips with at least three matched seconds form the continuous subset"
+                width="1594"
+                height="638"
+                loading="lazy"
+                decoding="async"
+              >
+            </a>
+          </div>
+          <figcaption>
+            Construction of VGGSound-Continuous. The two branches first identify candidate labels and build a quality-controlled clip set; temporal grounding then determines the final subset.
+          </figcaption>
+        </figure>
+
+        <div class="dataset-explanation">
+          <h3>Filtering procedure</h3>
+          <ol class="filter-steps">
+            <li>
+              <strong>Label-level screening.</strong>
+              GPT-4 reviews all VGGSound class labels and selects labels that may describe continuous sounds, producing the candidate set <var>L</var><sub>cont</sub>.
+            </li>
+            <li>
+              <strong>Grounding pass 1 — validity cleaning.</strong>
+              The text-to-audio grounding model removes silent clips and clips whose audio does not match the class label. These invalid clips are discarded; the remaining quality-controlled clips form <var>V</var><sub>valid</sub>.
+            </li>
+            <li>
+              <strong>Valid candidate pool.</strong>
+              Clips in <var>V</var><sub>valid</sub> whose labels belong to <var>L</var><sub>cont</sub> are retained for temporal verification.
+            </li>
+            <li>
+              <strong>Grounding pass 2 — temporal verification.</strong>
+              For each candidate clip, the model produces an audio–text similarity sequence <var>s</var>(<var>t</var>). Regions satisfying <var>s</var>(<var>t</var>) ≥ 0.5 are accumulated over time.
+            </li>
+            <li>
+              <strong>Final split.</strong>
+              A clip is assigned to VGGSound-Continuous when its accumulated matched duration is at least 3 seconds. Non-Continuous is defined as the complement of VGGSound-Continuous within <var>V</var><sub>valid</sub>, so rejected invalid clips are not included in either split.
+            </li>
+          </ol>
+
+          <div class="dataset-equations" aria-label="Filtering equations">
+            <span><var>m</var>(<var>t</var>) = 1[<var>s</var>(<var>t</var>) ≥ 0.5]</span>
+            <span><var>D</var> = Σ<sub>t</sub> <var>m</var>(<var>t</var>)Δ<var>t</var></span>
+            <span>VGG-C: <var>D</var> ≥ 3 s</span>
+            <span>Non-Continuous: <var>V</var><sub>valid</sub> \ VGG-C</span>
+          </div>
+
+          <p class="dataset-reference">
+            Grounding model:
+            <a href="https://arxiv.org/abs/2401.02584" target="_blank" rel="noopener noreferrer">Xu et al., “Towards Weakly Supervised Text-to-Audio Grounding”</a>.
+            <a href="./assets/figures/vggsound-continuous-filtering.pptx" download>Download the editable PowerPoint figure</a>.
+          </p>
+        </div>
+      </section>
+
+      <span class="anchor-alias" id="category1" aria-hidden="true"></span>
+      <section class="section-card" id="category2" aria-labelledby="gallery-title">
+        <h2 class="section-heading" id="gallery-title">Demo Gallery</h2>
+        <p class="section-intro">
+          Generated samples on VGGSound-Continuous. Compare the source video and spectrogram across ground truth, Smooth-Foley, FoleyCrafter, and Diff-Foley.
+        </p>
+
+        <div class="gallery-list">
+          <article class="sample-card">
+            <h3>Airplane</h3>
+            <p class="sample-meta">Sample 1 · Airplane flyby</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Airplane comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Airplane"><source src="./assets/Data/sample-1/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Airplane"><source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Airplane"><source src="./assets/Data/sample-1/A-airplane.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Airplane"><source src="./assets/Data/sample-1/C-airplane.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-1/GT-airplane flyby.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Airplane"><img src="./assets/Data/sample-1/GT-airplane flyby.png" alt="Ground Truth spectrogram for Airplane" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-1/B-airplane.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Airplane"><img src="./assets/Data/sample-1/B-airplane.png" alt="Smooth-Foley spectrogram for Airplane" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-1/A-airplane.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Airplane"><img src="./assets/Data/sample-1/A-airplane.png" alt="FoleyCrafter spectrogram for Airplane" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-1/C-airplane.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Airplane"><img src="./assets/Data/sample-1/C-airplane.png" alt="Diff-Foley spectrogram for Airplane" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Civil Defense Siren</h3>
+            <p class="sample-meta">Sample 6 · Continuous siren</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Civil Defense Siren comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Civil Defense Siren"><source src="./assets/Data/sample-6/GT-civil defense siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Civil Defense Siren"><source src="./assets/Data/sample-6/B-civil defense siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Civil Defense Siren"><source src="./assets/Data/sample-6/A-civil defense siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Civil Defense Siren"><source src="./assets/Data/sample-6/C-civil defense siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-6/GT-civil defense siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Civil Defense Siren"><img src="./assets/Data/sample-6/GT-civil defense siren.png" alt="Ground Truth spectrogram for Civil Defense Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-6/B-civil defense siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Civil Defense Siren"><img src="./assets/Data/sample-6/B-civil defense siren.png" alt="Smooth-Foley spectrogram for Civil Defense Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-6/A-civil defense siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Civil Defense Siren"><img src="./assets/Data/sample-6/A-civil defense siren.png" alt="FoleyCrafter spectrogram for Civil Defense Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-6/C-civil defense siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Civil Defense Siren"><img src="./assets/Data/sample-6/C-civil defense siren.png" alt="Diff-Foley spectrogram for Civil Defense Siren" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Train Horn</h3>
+            <p class="sample-meta">Sample 7 · Train horning</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Train Horn comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Train Horn"><source src="./assets/Data/sample-7/GT-train horning.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Train Horn"><source src="./assets/Data/sample-7/B-train horning.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Train Horn"><source src="./assets/Data/sample-7/A-train horning.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Train Horn"><source src="./assets/Data/sample-7/C-train horning.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-7/GT-train horning.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Train Horn"><img src="./assets/Data/sample-7/GT-train horning.png" alt="Ground Truth spectrogram for Train Horn" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-7/B-train horning.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Train Horn"><img src="./assets/Data/sample-7/B-train horning.png" alt="Smooth-Foley spectrogram for Train Horn" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-7/A-train horning.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Train Horn"><img src="./assets/Data/sample-7/A-train horning.png" alt="FoleyCrafter spectrogram for Train Horn" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-7/C-train horning.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Train Horn"><img src="./assets/Data/sample-7/C-train horning.png" alt="Diff-Foley spectrogram for Train Horn" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Helicopter</h3>
+            <p class="sample-meta">Sample 2 · Helicopter flight</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Helicopter comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Helicopter"><source src="./assets/Data/sample-2/GT-helicopter.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Helicopter"><source src="./assets/Data/sample-2/B-helicopter.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Helicopter"><source src="./assets/Data/sample-2/A-helicopter.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Helicopter"><source src="./assets/Data/sample-2/C-helicopter.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-2/GT-helicopter.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Helicopter"><img src="./assets/Data/sample-2/GT-helicopter.png" alt="Ground Truth spectrogram for Helicopter" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-2/B-helicopter.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Helicopter"><img src="./assets/Data/sample-2/B-helicopter.png" alt="Smooth-Foley spectrogram for Helicopter" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-2/A-helicopter.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Helicopter"><img src="./assets/Data/sample-2/A-helicopter.png" alt="FoleyCrafter spectrogram for Helicopter" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-2/C-helicopter.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Helicopter"><img src="./assets/Data/sample-2/C-helicopter.png" alt="Diff-Foley spectrogram for Helicopter" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Ambulance Siren</h3>
+            <p class="sample-meta">Sample 10 · Moving ambulance</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Ambulance Siren comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Ambulance Siren"><source src="./assets/Data/sample-10/GT-ambulance siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Ambulance Siren"><source src="./assets/Data/sample-10/B-ambulance siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Ambulance Siren"><source src="./assets/Data/sample-10/A-ambulance siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Ambulance Siren"><source src="./assets/Data/sample-10/C-ambulance siren.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-10/GT-ambulance siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Ambulance Siren"><img src="./assets/Data/sample-10/GT-ambulance siren.png" alt="Ground Truth spectrogram for Ambulance Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-10/B-ambulance siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Ambulance Siren"><img src="./assets/Data/sample-10/B-ambulance siren.png" alt="Smooth-Foley spectrogram for Ambulance Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-10/A-ambulance siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Ambulance Siren"><img src="./assets/Data/sample-10/A-ambulance siren.png" alt="FoleyCrafter spectrogram for Ambulance Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-10/C-ambulance siren.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Ambulance Siren"><img src="./assets/Data/sample-10/C-ambulance siren.png" alt="Diff-Foley spectrogram for Ambulance Siren" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Airplane Flyby</h3>
+            <p class="sample-meta">Sample 3 · Approaching aircraft</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Airplane Flyby comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Airplane Flyby"><source src="./assets/Data/sample-3/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Airplane Flyby"><source src="./assets/Data/sample-3/B-airplane flyby.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Airplane Flyby"><source src="./assets/Data/sample-3/A-airplane flyby.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Airplane Flyby"><source src="./assets/Data/sample-3/C-airplane flyby.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-3/GT-airplane flyby.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Airplane Flyby"><img src="./assets/Data/sample-3/GT-airplane flyby.png" alt="Ground Truth spectrogram for Airplane Flyby" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-3/B-airplane flyby.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Airplane Flyby"><img src="./assets/Data/sample-3/B-airplane flyby.png" alt="Smooth-Foley spectrogram for Airplane Flyby" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-3/A-airplane flyby.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Airplane Flyby"><img src="./assets/Data/sample-3/A-airplane flyby.png" alt="FoleyCrafter spectrogram for Airplane Flyby" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-3/C-airplane flyby.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Airplane Flyby"><img src="./assets/Data/sample-3/C-airplane flyby.png" alt="Diff-Foley spectrogram for Airplane Flyby" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Police Car Siren</h3>
+            <p class="sample-meta">Sample 9 · Moving police vehicle</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Police Car Siren comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Police Car Siren"><source src="./assets/Data/sample-9/GT-police car (siren).mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Police Car Siren"><source src="./assets/Data/sample-9/B-police car (siren).mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Police Car Siren"><source src="./assets/Data/sample-9/A-police car (siren).mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Police Car Siren"><source src="./assets/Data/sample-9/C-police car (siren).mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-9/GT-police car (siren).png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Police Car Siren"><img src="./assets/Data/sample-9/GT-police car (siren).png" alt="Ground Truth spectrogram for Police Car Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-9/B-police car (siren).png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Police Car Siren"><img src="./assets/Data/sample-9/B-police car (siren).png" alt="Smooth-Foley spectrogram for Police Car Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-9/A-police car (siren).png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Police Car Siren"><img src="./assets/Data/sample-9/A-police car (siren).png" alt="FoleyCrafter spectrogram for Police Car Siren" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-9/C-police car (siren).png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Police Car Siren"><img src="./assets/Data/sample-9/C-police car (siren).png" alt="Diff-Foley spectrogram for Police Car Siren" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Train Whistle I</h3>
+            <p class="sample-meta">Sample 4 · Train whistling</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Train Whistle I comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Train Whistle I"><source src="./assets/Data/sample-4/GT-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Train Whistle I"><source src="./assets/Data/sample-4/B-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Train Whistle I"><source src="./assets/Data/sample-4/A-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Train Whistle I"><source src="./assets/Data/sample-4/C-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-4/GT-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Train Whistle I"><img src="./assets/Data/sample-4/GT-train whistling.png" alt="Ground Truth spectrogram for Train Whistle I" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-4/B-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Train Whistle I"><img src="./assets/Data/sample-4/B-train whistling.png" alt="Smooth-Foley spectrogram for Train Whistle I" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-4/A-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Train Whistle I"><img src="./assets/Data/sample-4/A-train whistling.png" alt="FoleyCrafter spectrogram for Train Whistle I" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-4/C-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Train Whistle I"><img src="./assets/Data/sample-4/C-train whistling.png" alt="Diff-Foley spectrogram for Train Whistle I" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Train Whistle II</h3>
+            <p class="sample-meta">Sample 5 · Train whistling</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Train Whistle II comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Train Whistle II"><source src="./assets/Data/sample-5/GT-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Train Whistle II"><source src="./assets/Data/sample-5/B-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Train Whistle II"><source src="./assets/Data/sample-5/A-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Train Whistle II"><source src="./assets/Data/sample-5/C-train whistling.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-5/GT-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Train Whistle II"><img src="./assets/Data/sample-5/GT-train whistling.png" alt="Ground Truth spectrogram for Train Whistle II" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-5/B-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Train Whistle II"><img src="./assets/Data/sample-5/B-train whistling.png" alt="Smooth-Foley spectrogram for Train Whistle II" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-5/A-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Train Whistle II"><img src="./assets/Data/sample-5/A-train whistling.png" alt="FoleyCrafter spectrogram for Train Whistle II" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-5/C-train whistling.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Train Whistle II"><img src="./assets/Data/sample-5/C-train whistling.png" alt="Diff-Foley spectrogram for Train Whistle II" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sample-card">
+            <h3>Subway</h3>
+            <p class="sample-meta">Sample 8 · Subway, metro, underground</p>
+            <p class="scroll-hint">Swipe or scroll horizontally to compare all four models.</p>
+            <div class="comparison-scroll" tabindex="0" aria-label="Subway comparison table; scroll horizontally for all models">
+              <table class="comparison-table">
+                <thead><tr><th scope="col">Ground Truth</th><th scope="col">Ours</th><th scope="col">FoleyCrafter</th><th scope="col">Diff-Foley</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><video controls preload="none" aria-label="Ground Truth video for Subway"><source src="./assets/Data/sample-8/GT-subway, metro, underground.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Smooth-Foley video for Subway"><source src="./assets/Data/sample-8/B-subway, metro, underground.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="FoleyCrafter video for Subway"><source src="./assets/Data/sample-8/A-subway, metro, underground.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                    <td><video controls preload="none" aria-label="Diff-Foley video for Subway"><source src="./assets/Data/sample-8/C-subway, metro, underground.mp4" type="video/mp4">Your browser does not support HTML video.</video></td>
+                  </tr>
+                  <tr class="spectrogram-row">
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-8/GT-subway, metro, underground.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Ground Truth spectrogram for Subway"><img src="./assets/Data/sample-8/GT-subway, metro, underground.png" alt="Ground Truth spectrogram for Subway" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-8/B-subway, metro, underground.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Smooth-Foley spectrogram for Subway"><img src="./assets/Data/sample-8/B-subway, metro, underground.png" alt="Smooth-Foley spectrogram for Subway" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-8/A-subway, metro, underground.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size FoleyCrafter spectrogram for Subway"><img src="./assets/Data/sample-8/A-subway, metro, underground.png" alt="FoleyCrafter spectrogram for Subway" loading="lazy" decoding="async"></a></td>
+                    <td><a class="spectrogram-link" href="./assets/Data/sample-8/C-subway, metro, underground.png" target="_blank" rel="noopener noreferrer" aria-label="Open full-size Diff-Foley spectrogram for Subway"><img src="./assets/Data/sample-8/C-subway, metro, underground.png" alt="Diff-Foley spectrogram for Subway" loading="lazy" decoding="async"></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+
+      </section>
+    </main>
+
+    <a class="back-to-top" href="#top" aria-label="Back to top">Back to top</a>
+
+    <footer class="site-footer">© 2024 Smooth-Foley</footer>
+
     <script>
-      
-        window.onscroll = function() {scrollFunction()};
+      document.querySelectorAll(".comparison-scroll, .dataset-figure-scroll").forEach((container) => {
+        container.addEventListener("keydown", (event) => {
+          if (event.target !== container || !["ArrowLeft", "ArrowRight"].includes(event.key)) {
+            return;
+          }
 
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                document.getElementById("scrollToTopBtn").style.display = "block";
-            } else {
-                document.getElementById("scrollToTopBtn").style.display = "none";
-            }
-        }
-      
-        function scrollToTop() {
-            document.body.scrollTop = 0; 
-            document.documentElement.scrollTop = 0; 
-        }
+          event.preventDefault();
+          const direction = event.key === "ArrowRight" ? 1 : -1;
+          container.scrollBy({ left: direction * container.clientWidth * 0.75, behavior: "auto" });
+        });
+      });
     </script>
-    <div class="container pt-5 mt-5 shadow p-4 mb-5 bg-white rounded">
-      <div class="text-center">
-        <h1><span class="custom-color">Smooth-Foley</span></h1><h3> Creating Continuous Sound for Video-to-Audio Generation Under Semantic</h3>
-        <p class="lead fw-bold">
-          |<a href="" class="btn border-white bg-white fw-bold">Paper</a>|<a href="" class="btn border-white bg-white fw-bold">Code</a>|
-        </p>
-        <p class="fst-italic mb-0">
-          <span class="author-block">
-            <a href="">Yaoyun Zhang</a><sup>1</sup>,</span>
-          
-          <span class="author-block">
-            <a href="https://scholar.google.de/citations?user=e0h0ae8AAAAJ&hl=en&oi=ao">Xuenan Xu</a><sup>1</sup>,
-          </span>
-          <span class="author-block">
-            <a href="https://scholar.google.de/citations?user=9cvRM5wAAAAJ&hl=en&oi=ao">Mengyue Wu</a><sup>1</sup>,
-          </span>
-          
-        </span></p>
-        <p><b></b></p>
-      </div>
-      <div style="text-align: center">
-        <span class="author-block"><sup>1</sup>MoE Key Lab of Artificial Intelligence, AI Institute</span>
-      </div>
-      <div style="text-align: center">
-        <span class="author-block"><sup>2</sup> X-LANCE Lab, Department of Computer Science and Engineering</span>
-        <span class="author-block"><sup>3</sup>Shanghai Jiao Tong University</span>
-      </div>
-      <p>
-        <b><p class="custom-color">Abstract.</p></b>  
-        The video-to-audio (V2A) generation task has drawn attention in the field of multimedia due to the practicality in producing Foley sound.
-        Semantic and temporal conditions are fed to the generation model to indicate sound events and temporal occurrence.
-        Recent studies on synthesizing immersive and synchronized audio are faced with challenges on videos with moving visual presence.
-        The temporal condition is not accurate enough while low-resolution semantic condition exacerbates the problem.
-        To tackle these challenges, we propose Smooth-Foley, a V2A generative model taking semantic guidance from the textual label across the generation to enhance both semantic and temporal alignment in audio.
-        Two adapters are trained to leverage pre-trained text-to-audio generation models.
-        A frame adapter integrates high-resolution frame-wise video features while a temporal adapter integrates temporal conditions obtained from similarities of visual frames and textual labels.
-        The incorporation of semantic guidance from textual labels achieves precise audio-video alignment.
-        We conduct extensive quantitative and qualitative experiments.
-        Results show that Smooth-Foley performs better than existing models on both continuous sound scenarios and general scenarios.
-        With semantic guidance, the audio generated by Smooth-Foley exhibits higher quality and better adherence to physical laws.
-
-      </p>
-      
-      <b class="custom-color">Demo Navigation.</b>
-      <div style="text-align: center;">
-        <!-- <a href="#category1" class="btn border-white bg-white fw-bold">(a)Method</a> -->
-        <a href="#category2" class="btn border-white bg-white fw-bold">(a)Gallery</a>
-        <!-- <a href="#category3" class="btn border-white bg-white fw-bold">(c) Frequency</a>
-        <a href="#category4" class="btn border-white bg-white fw-bold">(d) Timestamp</a>
-        <a href="#category5" class="btn border-white bg-white fw-bold">(evaluation) STEAM </a> -->
-      </div>
-    </div>
-    
-    <div class="container pt-5 mt-5 shadow p-4 mb-5 bg-white rounded">
-        <h2 id="pipeline-overview" style="text-align: center;" class="custom-color">Method</h2>
-        <br>
-        <p style="text-align: center;">
-            <img src="./pipeline.png" height="500" width="800" class="img-fluid">
-        </p>
-        <div style="text-align: center">The overall pipeline of Smooth-Foley</div>
-    </div>
-
-
-    <div class="container pb-0 shadow p-5 mb-5 bg-white rounded">
-      <h3 id="category1" class="custom-color">(a) Gallery</h3>
-      <p class="mb-0">
-        The generated samples on VGG-Continuous.
-      </p>
-      <div class="container pt-3 table-responsive">
-        <table class="table table-hover" id="supervision-efficiency-table">
-          <thead>
-            <tr>
-              <!-- <th style="text-align: center">&emsp;&emsp;&emsp;&emsp;Label&emsp;&emsp;&emsp;&emsp;</th> -->
-              <th style="text-align: center">&emsp;&emsp;&emsp;Ground Truth &emsp;&emsp;</th>
-              <th style="text-align: center">&emsp;&emsp;&emsp;Ours&emsp;&emsp;&emsp;</th>
-              <th style="text-align: center">&emsp;&emsp;&emsp;FoleyCrafter&emsp;&emsp;&emsp;</th>
-              <th style="text-align: center">&emsp;&emsp;&emsp;Diff-Foley&emsp;&emsp;&emsp;</th>
-              <!-- <th style="text-align: center">Audio</th>      -->
-            </tr>
-          </thead>
-          <tbody>
-            <table>
-              <tr class="video-row"> 
-              <!-- Sample1 -->
-              <td ><video class="video" controls> <source src="./assets/Data/sample-1/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td style="text-align: center"><video class="video" controls> <source src="./assets/Data/sample-1/B-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td ><video class="video" controls> <source src="./assets/Data/sample-1/A-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              <td ><video class="video" controls> <source src="./assets/Data/sample-1/C-airplane.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-            </tr>
-            </table>
-            
-            <table>
-            <tr class="video-row"> <!-- Set Spec below  -->
-              <td ><a class="sample_4"><img src="./assets/Data/sample-1/GT-airplane flyby.png" alt="Your Image"></a></td> 
-              <td ><a class="sample_4"><img src="./assets/Data/sample-1/B-airplane.png" alt="Your Image"></a></td> 
-              <td ><a class="sample_4"><img src="./assets/Data/sample-1/A-airplane.png" alt="Your Image"></a></td> 
-              <td > <a class="sample_4"><img src="./assets/Data/sample-1/C-airplane.png" alt="Your Image"></a></td> 
-            <tr> 
-            </table>
-
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/GT-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/B-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/A-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-6/C-civil defense siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-6/GT-civil defense siren.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-6/B-civil defense siren.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-6/A-civil defense siren.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-6/C-civil defense siren.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/GT-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/B-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/A-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-7/C-train horning.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-7/GT-train horning.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-7/B-train horning.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-7/A-train horning.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-7/C-train horning.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-            <hr>   <!-- Sample2 -->
-            <table>
-              <tr class="video-row">
-                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/GT-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/B-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/A-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video_3" controls> <source src="./assets/Data/sample-2/C-helicopter.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-              </tr>
-            </table>
-            <table>
-              <tr  class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-2/GT-helicopter.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-2/B-helicopter.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-2/A-helicopter.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-2/C-helicopter.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-            
-
-            <hr>
-            <!-- sample10 -->
-            <table>
-              <tr class="video-row"> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/GT-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/B-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/A-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-10/C-ambulance siren.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-10/GT-ambulance siren.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-10/B-ambulance siren.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-10/A-ambulance siren.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-10/C-ambulance siren.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-            
-
-                
-            
-
-            
-            <hr>
-            <!-- sample3 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/GT-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/B-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/A-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-3/C-airplane flyby.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-3/GT-airplane flyby.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-3/B-airplane flyby.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-3/A-airplane flyby.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-3/C-airplane flyby.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/GT-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/B-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/A-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-9/C-police car (siren).mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-9/GT-police car (siren).png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-9/B-police car (siren).png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-9/A-police car (siren).png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-9/C-police car (siren).png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-            
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/GT-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/B-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/A-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-4/C-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-4/GT-train whistling.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-4/B-train whistling.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-4/A-train whistling.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-4/C-train whistling.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/GT-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/B-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/A-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-5/C-train whistling.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-5/GT-train whistling.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-5/B-train whistling.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-5/A-train whistling.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-5/C-train whistling.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-
-
-            <hr>
-            <!-- sample4 -->
-            <table>
-              <tr class="video-row"> 
-                  <!-- Sample3 -->
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/GT-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/B-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/A-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                <td style="text-align: center"><video   class="video" controls> <source src="./assets/Data/sample-8/C-subway, metro, underground.mp4" type="video/mp4">Your browser does not support the audio element.</video></td> 
-                </tr>
-            </table>
-            
-            <table>
-              <tr class="video-row"> <!-- Set Spec below  -->
-                <td ><a class="sample_4"><img src="./assets/Data/sample-8/GT-subway, metro, underground.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-8/B-subway, metro, underground.png" alt="Your Image"></a></td> 
-                <td ><a class="sample_4"><img src="./assets/Data/sample-8/A-subway, metro, underground.png" alt="Your Image"></a></td> 
-                <td > <a class="sample_4"><img src="./assets/Data/sample-8/C-subway, metro, underground.png" alt="Your Image"></a></td>
-              </tr>
-            </table>
-
-
-
-
-
-
-                             
-         </tbody>
-        </table>
-      </div>
-    </div>
-
-      
-    <footer>
-      &copy; 2024 Smooth-Foley
-    </footer>
-
-  
-</body></html>
+  </body>
+</html>
